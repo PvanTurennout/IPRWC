@@ -1,0 +1,33 @@
+.checkout{
+  display: flex;
+  margin: 5%;
+  gap: 5%;
+}
+
+.make-list{
+  display: flex;
+  flex-direction: column;
+}
+
+.text-input{
+  width: 50%;
+  margin: 0 2.5% 2.5%;
+
+  &:first-of-type{
+    margin-top: 2.5%;
+  }
+}
+
+.paddingB-5{
+  padding-bottom: 5%;
+}
+
+@media screen and (max-width: 1200px) {
+  .checkout{
+    flex-wrap: wrap;
+
+    :nth-child(1){
+      margin-bottom: 5%;
+    }
+  }
+}

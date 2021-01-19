@@ -1,0 +1,6 @@
+<div class="tab-page product-management">
+  <button mat-raised-button color="primary" (click)="onNewProduct()" class="to-left small-margin-top">Add New Product</button>
+  <div class="margin-top">
+    <app-product-list-display [products]="products" [columns]="productListColumns"></app-product-list-display>
+  </div>
+</div>

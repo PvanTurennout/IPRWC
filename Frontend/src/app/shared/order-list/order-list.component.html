@@ -1,0 +1,42 @@
+<div class="order-list-container">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let order of orders; let i = index;">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="no-grow">
+          Order number: {{order.orderId}}
+        </mat-panel-title>
+        <mat-panel-description class="no-grow centerText">
+          Status: {{statusToString(order.orderStatus)}}
+        </mat-panel-description>
+        <mat-panel-description class="no-grow rightText">
+          Placed On: {{order.orderPlacementDate.toLocaleDateString()}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <button mat-raised-button color="primary" *ngIf="canEdit" [matMenuTriggerFor]="statusMenu">Change status</button>
+      <mat-menu #statusMenu="matMenu">
+        <button mat-menu-item *ngFor="let status of statuses" (click)="changeStatus(i, status)">{{statusToString(status)}}</button>
+      </mat-menu>
+
+      <mat-divider style="margin: 1%;"></mat-divider>
+
+      <div class="shipping-info">
+        <div class="shipping-info-text">
+          <p class="header shipping-info-header">Shipping info</p>
+          <div class="shipping-info-text-block">
+            <p>Name: {{order.firstName}} {{order.lastName}}</p>
+            <p>Address: {{order.address}}</p>
+            <p>Zipcode: {{order.zipcode}}</p>
+            <p>Town: {{order.town}}</p>
+            <p>Shipping Method: {{order.shippingMethod}}</p>
+          </div>
+        </div>
+
+        <div class="items">
+          <p class="header">Items</p>
+          <app-product-amount-list [productList]="order.items" [totalCost]="order.totalCost"></app-product-amount-list>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

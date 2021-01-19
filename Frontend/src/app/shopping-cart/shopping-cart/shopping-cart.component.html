@@ -1,0 +1,63 @@
+<div class="page cart">
+  <app-page-title title="Shopping Cart"></app-page-title>
+
+  <div class="table-container" (window:resize)="makeTableResponsive()">
+    <table mat-table [dataSource]="shoppingCartObservable()">
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef class="column-title"> Image </th>
+        <td mat-cell *matCellDef="let item" class="width-15"> <div class="image">
+          <img [src]="getImagePath(item.product)" alt="Product image"> </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef class="table-footer text"> Total </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="column-title"> Name </th>
+        <td mat-cell *matCellDef="let item" class="text">
+          <a class="fix-link" [routerLink]="'/product/' + (item.product.productId)">
+            {{item.product.brand}} {{item.product.name}}
+          </a>
+        </td>
+        <td mat-footer-cell *matFooterCellDef class="table-footer">  </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef class="column-title"> amount </th>
+        <td mat-cell *matCellDef="let item; let i = index" class="width-15">
+          <div class="amountControl">
+            <button mat-icon-button (click)="upItemAmount(i)"><mat-icon>add</mat-icon></button>
+            <span style="font-size: 24px">{{item.amount}}</span>
+            <button mat-icon-button (click)="lowerItemAmount(i)"><mat-icon>remove</mat-icon></button>
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef class="table-footer"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="subtotal">
+        <th mat-header-cell *matHeaderCellDef class="column-title"> Subtotal </th>
+        <td mat-cell *matCellDef="let item" class="width-15 text">
+          {{item.productSubtotal|currency: 'EUR'}}
+        </td>
+        <td mat-footer-cell *matFooterCellDef class="table-footer text">
+          {{totalCost | currency: 'EUR'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef class="column-title"> Delete </th>
+        <td mat-cell *matCellDef="let i = index;" class="width-1">
+          <button mat-icon-button (click)="deleteItem(i)"><mat-icon>delete</mat-icon></button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef class="table-footer"> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="control-buttons">
+    <button mat-button color="warn" (click)="clearList()" class="button"><span class="little-cross">×</span> <span>Remove All Items</span></button>
+    <button mat-raised-button color="primary" (click)="makeOrder()" class="button left-button">Checkout</button>
+  </div>
+</div>

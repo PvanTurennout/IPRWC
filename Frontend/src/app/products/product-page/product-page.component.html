@@ -1,0 +1,53 @@
+<div class="product-page">
+
+  <div class="text-info">
+    <p class="title text">{{product.brand}} {{product.name}}</p>
+
+    <div class="sellable">
+      <div class="sellable-text">
+        <p class="header text">Bracelet</p>
+        <p>Length: {{product.watch.watchBracelet.length}}</p>
+        <p>Material: {{product.watch.watchBracelet.material}}</p>
+        <p>Style: {{product.watch.watchBracelet.style}}</p>
+        <p>Color: {{product.watch.watchBracelet.color}}</p>
+        <p></p>
+      </div>
+
+      <div class="sellable-text">
+        <p class="header text">Case</p>
+        <p>Material: {{product.watch.material}}</p>
+        <p>Size: {{product.watch.size}} cm</p>
+        <p>Pointer Color: {{product.watch.colorPointer}}</p>
+        <p>Dial Color: {{product.watch.colorDial}}</p>
+      </div>
+    </div>
+
+    <p class="text">{{product.description}}</p>
+  </div>
+
+
+  <div class="visual-info">
+    <div class="image">
+      <img *ngIf="product.imagePath; else noImageFound" [src]="getProductImagePath()" alt="No Image Found">
+    </div>
+    <p class="visual-text">Price: {{product.price | currency: 'EUR'}}</p>
+    <p class="visual-text">Stock: {{product.stock}}</p>
+    <div class="buttons">
+
+      <button [disabled]="!isLoggedIn()" mat-button (click)="onWishlist()">
+        {{inWishlist ? 'remove from wishlist' : 'add to wishlist'}}
+        <mat-icon>{{inWishlist ? 'remove_circle_outline' : 'favorite'}}</mat-icon>
+      </button>
+
+      <button mat-button (click)="addToCart()">
+        add to cart
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #noImageFound>
+  <img src="assets/img/No-image-found.jpg" alt="No Image Found!" />
+</ng-template>

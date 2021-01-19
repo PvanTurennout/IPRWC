@@ -1,0 +1,57 @@
+.product-page{
+  margin: 2.5% 5%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  text-align: center;
+
+  .text-info{
+    width: 100%;
+
+    .text{
+      text-align: center;
+      font-size: 1em;
+      margin-bottom: 5%;
+    }
+
+    .title{
+      font-size: 3em;
+      margin-bottom: 7.5%;
+    }
+
+    .header{
+      font-size: 1.1em;
+      text-decoration: underline;
+    }
+
+    .sellable{
+      display: flex;
+      flex-direction: row;
+      gap: 5%;
+      width: 100%;
+
+      .sellable-text{
+        width: 100%;
+        margin-bottom: 5%;
+      }
+    }
+  }
+
+  .visual-info{
+    width: 100%;
+
+    .visual-text{
+      text-align: center;
+      font-size: 1.2em;
+      margin-bottom: 2.5%;
+    }
+
+    .image{
+      margin-bottom: 2.5%;
+      img{
+        max-width: 80%;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="tab-page">
+  <mat-form-field class="fullWidth margin-top" [style.min-width.px]=240 [style.width.%]=100 appearance="outline">
+    <mat-label>Search Order Number</mat-label>
+    <input matInput [formControl]="searchOrderFormControl">
+    <button mat-icon-button matSuffix>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="small-margin-top">
+    <app-order-list [canEdit]="true" [orders]="orders | idFilter: searchOrderFormControl.value"></app-order-list>
+  </div>
+</div>
+

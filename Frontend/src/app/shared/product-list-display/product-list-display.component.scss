@@ -1,0 +1,33 @@
+.table-container {
+
+  table {
+    width: 100%;
+  }
+
+  .image {
+    display: flex;
+    img {
+      height: 100px;
+      margin: 10% 0;
+    }
+  }
+
+  .text{
+    font-size: 1.25em;
+  }
+
+  .column-title{
+    font-size: 1em;
+  }
+
+  .width-15 {
+    width: 15%;
+  }
+
+  .width-1 {
+    width: 1%;
+  }
+  .width-5 {
+    width: 5%;
+  }
+}

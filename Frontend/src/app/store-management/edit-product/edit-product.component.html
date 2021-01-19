@@ -1,0 +1,104 @@
+<div class="page edit-product">
+  <app-page-title title="{{isNew ? 'Create Product' : 'Edit Product'}}"></app-page-title>
+  <div class="add-some-margin product-form">
+    <form class="product-edit-form" [formGroup]="watchFromGroup">
+      <h4>Watch</h4>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Size</mat-label>
+        <input type="number" min="1" formControlName="size" matInput required />
+        <span matSuffix>cm</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>material</mat-label>
+        <input formControlName="material" matInput required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Pointers Color</mat-label>
+        <input formControlName="colorPointer" matInput required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Dial Color</mat-label>
+        <input formControlName="colorDial" matInput required />
+      </mat-form-field>
+    </form>
+
+    <form class="product-edit-form" [formGroup]="braceletFromGroup">
+      <h4>Bracelet</h4>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Length</mat-label>
+        <input type="number" formControlName="length" matInput required />
+        <span matSuffix>cm</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Material</mat-label>
+        <input formControlName="material" matInput required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Style</mat-label>
+        <input formControlName="style" matInput required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Color</mat-label>
+        <input formControlName="color" matInput required />
+      </mat-form-field>
+    </form>
+
+    <form class="product-edit-form" [formGroup]="productFromGroup">
+      <h4>Product</h4>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Brand</mat-label>
+        <input formControlName="brand" matInput required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Price</mat-label>
+        <input type="number" formControlName="price" matInput required />
+        <span matPrefix>€</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Stock</mat-label>
+        <input matInput type="number" formControlName="stock" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput required ></textarea>
+      </mat-form-field>
+    </form>
+
+    <div class="product-edit-form image-upload">
+      <h4>Image</h4>
+      <div class="custom-file">
+        <span class="file-name">Selected image: {{imageFileName}}</span>
+        <input id="image" accept="image/*" type="file" class="custom-file" (change)="onImageChange($event)">
+        <label for="image" class="custom-file-label mat-menu-item"><mat-icon>upload</mat-icon> Choose Image</label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="product-edit-buttons">
+    <button mat-raised-button color="warn" (click)="onBack()">
+      back
+    </button>
+
+    <button mat-raised-button class="left" color="primary" [disabled]="overheadFromGroup.invalid" (click)="onSave()">
+      save
+    </button>
+  </div>
+</div>

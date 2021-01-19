@@ -1,0 +1,14 @@
+<div class="page">
+  <app-page-title title="Register"></app-page-title>
+  <div class="register">
+      <app-input-email [emailFormGroup]="registerForm"></app-input-email>
+      <app-input-password [passwordFormGroup]="registerForm" [repeatPassword]="false">
+        <p style="width: 20vw; font-size: 1.1em;">
+          A password must contain: a lowercase letter, a capital letter, a number and a special character
+        </p>
+      </app-input-password>
+      <app-input-password [passwordFormGroup]="registerForm" [repeatPassword]="true"></app-input-password>
+      <button mat-raised-button color="primary" [disabled]="!registerForm.valid" (click)="onRegister()">Register</button>
+      <a mat-button routerLink="/login">Already Registered? Login!</a>
+  </div>
+</div>

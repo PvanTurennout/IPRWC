@@ -1,0 +1,63 @@
+.product-cage{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  app-product-card{
+    margin-bottom: 2.5%;
+  }
+}
+
+.title{
+  padding-top: 2.5%;
+  text-align: center;
+  font-size: 5em;
+}
+
+.card{
+  margin: 5% 5% 2.5% 5%;
+
+  .card-body{
+    display: flex;
+
+    @media screen and (max-width: 600px){
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .filters{
+      display: flex;
+      gap: 10%;
+
+      @media screen and (max-width: 600px){
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .filter{
+        width: 60%;
+      }
+
+      .price{
+        display: flex;
+        gap: 5%;
+        justify-content: center;
+
+        .min-max-filter{
+          width: 75px;
+        }
+      }
+    }
+
+    .flex-align-left {
+      margin-left: auto;
+
+      @media screen and (max-width: 600px){
+        margin: 0;
+      }
+    }
+    .mirror{
+      transform: scaleX(-1);
+    }
+  }
+}

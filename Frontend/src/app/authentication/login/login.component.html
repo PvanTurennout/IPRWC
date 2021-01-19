@@ -1,0 +1,18 @@
+<div class="page">
+  <app-page-title title="Login"></app-page-title>
+  <div class="login">
+    <div class="login" *ngIf="notLoading; else spinner">
+      <app-input-email [emailFormGroup]="loginFormGroup"></app-input-email>
+      <div>
+        <app-input-password [passwordFormGroup]="loginFormGroup" [repeatPassword]="false"></app-input-password>
+        <mat-checkbox [(ngModel)]="stayLoggedIn" color="accent">Stay Logged In</mat-checkbox>
+      </div>
+      <button mat-raised-button color="primary" [disabled]="!loginFormGroup.valid" (click)="onLogin()">Login</button>
+      <a mat-button routerLink="/register">No Account? Register Here!</a>
+    </div>
+  </div>
+</div>
+
+<ng-template #spinner>
+    <mat-spinner color="primary"></mat-spinner>
+</ng-template>

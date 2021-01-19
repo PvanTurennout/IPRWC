@@ -1,0 +1,56 @@
+footer{
+  background: #202020;
+  height: 150px;
+  padding-bottom: 1.5%;
+}
+
+mat-grid-list{
+  height: 130px;
+}
+
+@media screen and (max-width: 600px) {
+  footer {
+    height: 400px;
+    padding-bottom: 5%;
+  }
+  mat-grid-list{
+    height: 380px;
+  }
+}
+
+#copyrightTextBlock{
+  align-self: center;
+  color: #96999b;
+  #copyrightText{
+    text-align: center;
+    margin: 0;
+  }
+}
+
+#contact{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0;
+  li {
+    list-style: none;
+    padding-bottom: 5px;
+    &:first-child{
+      padding-bottom: 10px;
+      font-weight: bold;
+    }
+  }
+}
+
+.social-media-icon{
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: #4a4d4f;
+
+  img{
+    margin: 12.5px;
+    height: 40px;
+    width: 40px;
+  }
+}

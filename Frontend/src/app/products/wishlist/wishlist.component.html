@@ -1,0 +1,10 @@
+<div class="page">
+  <app-page-title title="Wishlist"></app-page-title>
+  <div class="add-some-margin">
+    <app-product-list-display
+      [columns]="wishlistItemTableColumns"
+      [products]="wishlist">
+    </app-product-list-display>
+    {{wishlist.length < 1 ? 'You have no items on your wishlist' : ''}}
+  </div>
+</div>

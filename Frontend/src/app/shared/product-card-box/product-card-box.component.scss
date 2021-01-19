@@ -1,0 +1,9 @@
+.card-box{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  app-product-card{
+    margin: 1% 1% 2.5%;
+  }
+}

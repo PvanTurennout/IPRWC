@@ -1,0 +1,21 @@
+development: true
+# path for imag storage
+filePath: C:\images
+# jwt secrets
+secret: HiImASecret
+refreshSecret: HiIamRefreshSecret
+# jwt token validity time in minutes
+tokenValidityTime: 5
+
+database:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: postgres
+
+  # the password
+  password: 1234
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost:5432/test_webshop

@@ -1,0 +1,61 @@
+<div class="page">
+  <app-page-title title="Watches"></app-page-title>
+
+  <mat-card class="card">
+    <mat-form-field class="fullWidth" [style.min-width.px]=240 [style.width.%]=100 appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput [formControl]="searchFormControl">
+      <button mat-icon-button matSuffix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-card-content class="card-body">
+      <div class="filters">
+
+        <mat-form-field appearance="fill" class="filter">
+          <mat-label>Brand</mat-label>
+          <mat-select [formControl]="brandFilter" multiple>
+            <mat-option *ngFor="let brand of brands" [value]="brand">{{brand}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="filter price">
+
+          <mat-form-field appearance="standard" class="min-max-filter">
+            <mat-label>Min Price</mat-label>
+            <input matInput type="number" [(ngModel)]="minPrice">
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" class="min-max-filter">
+            <mat-label>Max Price</mat-label>
+            <input matInput type="number" [(ngModel)]="maxPrice">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <button mat-button  class="flex-align-left" [matMenuTriggerFor]="menu">
+        <mat-icon class="mirror">sort</mat-icon> Sort by
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <p mat-menu-item (click)="sortName(true)">Name A-Z</p>
+        <p mat-menu-item (click)="sortName(false)">Name Z-A</p>
+        <p mat-menu-item (click)="sortPrice(true)">Price Low To High</p>
+        <p mat-menu-item (click)="sortPrice(false)">Price High To Low</p>
+      </mat-menu>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="product-overview">
+    <app-product-card-box
+      [productList]="products
+      | stringFilter : searchFormControl.value
+      | priceFilter : minPrice : maxPrice
+      | stringListFilter : 'brand' : brandFilter.value
+      ">
+
+    </app-product-card-box>
+  </div>
+</div>
+

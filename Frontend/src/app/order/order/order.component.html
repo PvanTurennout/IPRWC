@@ -1,0 +1,80 @@
+<div class="page">
+  <app-page-title title="Checkout"></app-page-title>
+
+
+  <div class="checkout">
+    <mat-vertical-stepper class="fullWidth" [linear]="true" #stepper>
+      <mat-step [stepControl]="customerInfo">
+        <form [formGroup]="customerInfo" class="make-list">
+          <ng-template matStepLabel>Shipping Information</ng-template>
+
+          <mat-form-field class="text-input">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+          </mat-form-field>
+
+          <mat-form-field class="text-input">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+          </mat-form-field>
+
+          <mat-form-field class="text-input">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="example street 1" formControlName="address" required>
+          </mat-form-field>
+
+          <mat-form-field class="text-input">
+            <mat-label>Zipcode</mat-label>
+            <input matInput placeholder="1234 AA" formControlName="zipcode" required>
+          </mat-form-field>
+
+          <mat-form-field class="text-input">
+            <mat-label>Town</mat-label>
+            <input matInput formControlName="town" required>
+          </mat-form-field>
+        </form>
+
+        <div>
+          <button mat-button matStepperNext>Continue To Shipping</button>
+        </div>
+      </mat-step>
+
+      <mat-step [stepControl]="shipping">
+        <form [formGroup]="shipping">
+          <ng-template matStepLabel>Shipping Method</ng-template>
+          <mat-radio-group class="make-list" formControlName="method">
+            <mat-label>Shipping Options</mat-label>
+            <mat-radio-button class="paddingB-5" *ngFor="let something of shippingOptions" [value]="something">
+              {{something}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </form>
+
+        <div>
+          <button mat-button matStepperPrevious>Go Back</button>
+          <button mat-button matStepperNext>Continue To Payment</button>
+        </div>
+      </mat-step>
+
+      <mat-step [stepControl]="payment">
+        <form [formGroup]="payment">
+          <ng-template matStepLabel>Payment</ng-template>
+          <mat-radio-group class="make-list" formControlName="paymentMethod">
+            <mat-label>Payment Options</mat-label>
+            <mat-radio-button class="paddingB-5" *ngFor="let something of paymentOptions" [value]="something.toLowerCase()">
+              {{something}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </form>
+
+        <div>
+          <button mat-button matStepperPrevious>Go Back</button>
+          <button mat-button [disabled]="!orderForm.valid" (click)="onPayNow()">Pay Now</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+
+<!--    <app-product-list-display class="fullWidth" [products]="products" [columns]="itemTableColumns"></app-product-list-display>-->
+    <app-product-amount-list class="fullWidth" [productList]="list" [totalCost]="cost"></app-product-amount-list>
+  </div>
+</div>

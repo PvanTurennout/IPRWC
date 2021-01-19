@@ -1,0 +1,7 @@
+<div class="page">
+  <app-page-title title="My Orders"></app-page-title>
+  <div class="add-some-margin">
+    <app-order-list [canEdit]="false" [orders]="orderList"></app-order-list>
+    {{orderList === undefined ||orderList.length > 0 ? '' : 'You havn\'t placed an order with us, yet...'}}
+  </div>
+</div>
