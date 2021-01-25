@@ -3,12 +3,12 @@ import {ActivatedRoute, Data, Router} from '@angular/router';
 import {Product} from '../../typescript/model/product.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../products/product.service';
-import {displayHttpError, emptyFunction} from '../../typescript/utils/http-error-handeling';
-import {MatDialog} from '@angular/material/dialog';
+import {displayHttpError} from '../../typescript/utils/http-error-handeling';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Watch} from '../../typescript/model/watch.model';
 import {Bracelet} from '../../typescript/model/bracelet.model';
 import {ConfirmWarnDialogComponent} from '../../shared/dialogs/confirm-warn-dialog.component';
-import {RequestFailedException} from '../../typescript/exceptions/request-failed.exception';
+import {ForceConfirmDialogComponent} from '../../shared/dialogs/force-confirm-dialog.component';
 
 @Component({
   selector: 'app-edit-product',
@@ -57,6 +57,40 @@ export class EditProductComponent implements OnInit {
     );
   }
 
+  onBack() {
+    const backDialog = this.dialog.open(ConfirmWarnDialogComponent, {
+      data: {
+        title: 'Return To Store Management',
+        text: 'Are You Sure You Want To Go Back To Store Management? Changes Will Not Be Saved!',
+        buttonText: 'Go Back'
+      }
+    });
+
+    this.navigateToStoreManagement(backDialog);
+  }
+
+  onSuccessfulSave() {
+    const successDialog = this.dialog.open(ForceConfirmDialogComponent, {
+      data: {
+        title: this.isNew ? 'Successfully Created Product' : 'Successfully Updated Product',
+        text: this.isNew ?
+          'The product was created with success, you will be redirected to the store management page.' :
+          'The product was updated with success, you will be redirected to the store management page.',
+        buttonText: 'To Store Management'
+      },
+    });
+    this.navigateToStoreManagement(successDialog);
+  }
+
+  navigateToStoreManagement(dialog: MatDialogRef<ConfirmWarnDialogComponent>) {
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/store']);
+      }
+    });
+  }
+
+  // product form
   formInit(){
     this.productFormInit();
     this.watchFromInit();
@@ -66,8 +100,8 @@ export class EditProductComponent implements OnInit {
 
   overheadFormInit() {
     this.overheadFromGroup = this.formBuilder.group({
-      product: this.productFromGroup,
-      watch: this.watchFromGroup,
+      product:  this.productFromGroup,
+      watch:    this.watchFromGroup,
       bracelet: this.braceletFromGroup
     });
   }
@@ -105,7 +139,7 @@ export class EditProductComponent implements OnInit {
   }
 
   standardTextValidators() {
-    return [Validators.required, Validators.minLength, Validators.maxLength(150)];
+    return [Validators.required, Validators.minLength, Validators.maxLength(1000)];
   }
 
   standardNumberValidators() {
@@ -113,59 +147,12 @@ export class EditProductComponent implements OnInit {
   }
 
 
-
-  onBack() {
-    const backDialog = this.dialog.open(ConfirmWarnDialogComponent, {
-      data: {
-        title: 'Return To Store Management',
-        text: 'Are You Sure You Want To Go Back To Store Management? Changes Will Not Be Saved!',
-        buttonText: 'Go Back'
-      }
-    });
-
-    backDialog.afterClosed().subscribe(result => {
-      if (result) {
-        this.router.navigate(['/store']);
-      }
-    });
-  }
-
-  onSave() {
-    if (this.isNew){
-      this.onSaveCreate();
-    } else {
-      this.onSaveUpdate();
-    }
-  }
-
-  onSaveCreate() {
-    try {
-      this.saveImage();
-    } catch (RequestFailedException) {
-      return;
-    }
-
-    this.productService.createProduct(this.makeProduct()).subscribe(
-      emptyFunction,
-      error => displayHttpError(error, this.dialog)
-    );
-  }
-
-  onSaveUpdate() {
-    if (!this.isNew && !this.isImageTouched) {
-      this.newImagePath = this.product.imagePath;
-    } else {
-      try {
-        this.saveImage();
-      } catch (RequestFailedException) {
-        return;
-      }
-    }
-
-    this.productService.updateProduct(this.makeProduct()).subscribe(
-      emptyFunction,
-      error => displayHttpError(error, this.dialog)
-    );
+  // update logic
+  onImageChange(event: Event){
+    this.isImageTouched = true;
+    const img = (event.target as HTMLInputElement).files[0];
+    this.imageFileName = img.name;
+    this.image = img;
   }
 
   makeProduct() {
@@ -173,35 +160,72 @@ export class EditProductComponent implements OnInit {
     const watchFromControls = this.watchFromGroup.controls;
     const braceletFormControls = this.braceletFromGroup.controls;
 
-    return new Product(this.isNew ? 0 : this.product.productId, productFromControls.name.value,
-      productFromControls.brand.value, productFromControls.price.value, productFromControls.description.value,
-      productFromControls.stock.value, this.newImagePath,
-      new Watch(this.isNew ? 0 : this.product.watch.watchId, watchFromControls.material.value, watchFromControls.size.value,
-        watchFromControls.colorPointer.value, watchFromControls.colorDial.value,
-        new Bracelet(this.isNew ? 0 : this.product.watch.watchBracelet.braceletId, braceletFormControls.length.value,
-          braceletFormControls.material.value, braceletFormControls.style.value, braceletFormControls.color.value
+    return new Product(
+      this.isNew ? 0 : this.product.productId,
+      productFromControls.name.value,
+      productFromControls.brand.value,
+      productFromControls.price.value,
+      productFromControls.description.value,
+      productFromControls.stock.value,
+      this.newImagePath,
+      new Watch(
+        this.isNew ? 0 : this.product.watch.watchId,
+        watchFromControls.material.value,
+        watchFromControls.size.value,
+        watchFromControls.colorPointer.value,
+        watchFromControls.colorDial.value,
+        new Bracelet(
+          this.isNew ? 0 : this.product.watch.watchBracelet.braceletId,
+          braceletFormControls.length.value,
+          braceletFormControls.material.value,
+          braceletFormControls.style.value,
+          braceletFormControls.color.value
         )
       )
     );
+  }
+
+  onSave() {
+    if (!this.isNew && !this.isImageTouched) {
+      this.newImagePath = this.product.imagePath;
+      this.update();
+    } else {
+      this.saveImage();
+    }
   }
 
   saveImage() {
     this.productService.uploadImage(this.image).subscribe(
       response => {
         this.newImagePath = response.imageFileName;
+        this.save();
       },
       error => {
         displayHttpError(error, this.dialog);
-        throw new RequestFailedException('Image couldn\'t be created');
       }
     );
   }
 
-  onImageChange(event: Event){
-    this.isImageTouched = true;
-    const img = (event.target as HTMLInputElement).files[0];
-    this.imageFileName = img.name;
-    this.image = img;
+  save() {
+    if (this.isNew){
+      this.create();
+    } else {
+      this.update();
+    }
+  }
+
+  create() {
+    this.productService.createProduct(this.makeProduct()).subscribe(
+      () => this.onSuccessfulSave(),
+      error => displayHttpError(error, this.dialog)
+    );
+  }
+
+  update() {
+    this.productService.updateProduct(this.makeProduct()).subscribe(
+      () => this.onSuccessfulSave(),
+      error => displayHttpError(error, this.dialog)
+    );
   }
 
 }

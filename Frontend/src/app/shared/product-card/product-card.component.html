@@ -3,7 +3,7 @@
     <mat-card-title>{{product.name}}</mat-card-title>
     <mat-card-subtitle>{{product.brand}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image *ngIf="product.imagePath; else noImageFound" [src]="getProductImagePath()" alt="No Image Found">
+  <img mat-card-image *ngIf="product.imagePath" [src]="getProductImagePath()" alt="No Image Found">
   <mat-card-content>
     <span>{{product.price|currency: 'EUR'}}</span>
   </mat-card-content>
@@ -12,7 +12,3 @@
     <button mat-icon-button (click)="addToCart()"><mat-icon>add_shopping_cart</mat-icon></button>
   </mat-card-actions>
 </mat-card>
-
-<ng-template #noImageFound>
-  <img src="assets/img/No-image-found.jpg" alt="No Image Found!" />
-</ng-template>

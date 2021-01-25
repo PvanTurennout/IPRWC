@@ -8,6 +8,7 @@ import nl.pietervanturennout.model.Order;
 import nl.pietervanturennout.model.ProductAmountModel;
 
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -25,7 +26,12 @@ public class OrderProductsController {
     }
 
     public void populateOrdersItems(Order order) throws OperationFailedException, NotFoundException{
-        order.setItems(this.itemsDAO.getOrderItemList(order.getOrderId()));
+        try {
+            order.setItems(this.itemsDAO.getOrderItemList(order.getOrderId()));
+        } catch (NotFoundException e) {
+            order.setItems(new ArrayList<>());
+            return;
+        }
         populateProducts(order.getItems());
     }
 

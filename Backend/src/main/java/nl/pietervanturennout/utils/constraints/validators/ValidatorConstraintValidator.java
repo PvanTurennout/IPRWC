@@ -17,6 +17,13 @@ public class ValidatorConstraintValidator implements ConstraintValidator<Validat
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return validator.test(value) == ValidatorResult.ok;
+        ValidatorResult validatorResult = validator.test(value);
+        if (validatorResult == ValidatorResult.ok) {
+            return true;
+        } else {
+            System.out.print(value + "   ");
+            System.out.println(validatorResult);
+            return false;
+        }
     }
 }

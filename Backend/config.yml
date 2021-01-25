@@ -12,10 +12,10 @@ database:
   driverClass: org.postgresql.Driver
 
   # the username
-  user: postgres
+  user: dropwizard
 
   # the password
-  password: 1234
+  password: w8woord
 
   # the JDBC URL
   url: jdbc:postgresql://localhost:5432/test_webshop

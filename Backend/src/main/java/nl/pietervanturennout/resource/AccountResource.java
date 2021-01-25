@@ -1,7 +1,5 @@
 package nl.pietervanturennout.resource;
 
-import io.dropwizard.auth.Auth;
-import nl.pietervanturennout.api.authentication.AuthenticateObject;
 import nl.pietervanturennout.api.requests.AuthenticationRequest;
 import nl.pietervanturennout.api.responses.AccountResponse;
 import nl.pietervanturennout.api.responses.IdResponse;
@@ -15,7 +13,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Path("/api/account")
 @Produces(MediaType.APPLICATION_JSON)

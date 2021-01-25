@@ -1,7 +1,25 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 -- DB build script for IPRWC webshop (postgesql)
 
--- TABLES
+-- #cleanup for fresh install#
+-- drop table Account cascade;
+-- drop table Bracelet cascade;
+-- drop table Watch cascade;
+-- drop table Product cascade;
+-- drop table Product_Item_Junction_Table cascade;
+-- drop table WishList cascade;
+-- drop table Account_Group_Junction cascade;
+-- drop table "Group" cascade;
+-- drop table Role_Group_Junction cascade;
+-- drop table Role cascade;
+-- drop table "Order" cascade;
+-- drop table Order_Products cascade;sql enum
+-- drop type Status cascade;
 
+-- TYPES
+
+-- TABLES
 CREATE TABLE Account (
     account_id SERIAL NOT NULL,
     mailAddress text UNIQUE NOT NULL,
@@ -130,9 +148,7 @@ CREATE TRIGGER Add_Account_To_Customer_Group
     FOR EACH ROW
 EXECUTE PROCEDURE Add_Role_To_Account();
 
-
 -- VIEWS
-
 CREATE OR REPLACE VIEW full_watch AS
 SELECT watch_id,
        watch_bracelet_id,
@@ -192,9 +208,7 @@ CREATE OR REPLACE VIEW full_account AS
     JOIN Account a ON Account_Group_Junction.account_id = a.account_id
 ;
 
-
--- GROUP & ROLE CREATION
-
+-- GROUP & ROLE DATA
 INSERT INTO "Group" VALUES (1, 'Admin');
 INSERT INTO "Group" VALUES (2, 'Seller');
 INSERT INTO "Group" VALUES (3, 'Customer');
@@ -242,3 +256,60 @@ INSERT INTO Role_Group_Junction VALUES (3, 3);
 INSERT INTO Role_Group_Junction VALUES (3, 5);
 INSERT INTO Role_Group_Junction VALUES (3, 9);
 INSERT INTO Role_Group_Junction VALUES (3, 13);
+
+-- TEST DATA
+INSERT INTO Account VALUES (1, 'admin@test.nl', '$2a$14$Yefz8cWL2.FW83y4GDIhN.idKKNBIJVnIn1oU5Ty..t64CcA9ayYy');
+-- password: Admin@8080
+INSERT INTO Account VALUES (2, 'seller@test.nl', '$2a$14$dDsKArVU61.ve7bW3KcZbubNaOYVmWqJaKgcLZfiMq/asegr.a8gq');
+-- password: Seller@8080
+INSERT INTO Account VALUES (3, 'customer@test.nl', '$2a$14$DrAZtm7zZRFDbqKtfha.K.mQ.VFc7kK8RAOk9SNoKXwwJaGehHhTS');
+-- password: Customer@8080
+
+UPDATE Account_Group_Junction SET group_id = 1 WHERE account_id = 1;
+UPDATE Account_Group_Junction SET group_id = 2 WHERE account_id = 2;
+
+INSERT INTO WishList VALUES (1, 1);
+INSERT INTO WishList VALUES (2, 2);
+INSERT INTO WishList VALUES (3, 3);
+
+-- Daydate goud groen
+INSERT INTO Bracelet (bracelet_length, bracelet_material, bracelet_style, bracelet_color)
+    VALUES (50, 'goud', 'schakels', 'goud');
+INSERT INTO Watch (watch_bracelet_id, chassis_material, chassis_size, chassis_color_dial, chassis_color_pointers)
+    VALUES (1, 'goud', 40, 'groen', 'goud');
+INSERT INTO Product (product_name, product_brand, product_price,
+                     product_description, product_stock, product_sold, product_image_path, product_watch)
+    VALUES ('Day-Date', 'Rolex', 14999.99,
+            'Gouden Rolex Day-Date met groene wijzerplaat. Dagen in het Engels', 1, 0, 'rolex-daydate-goud.jpg', 1);
+
+-- Seiko 5
+INSERT INTO Bracelet (bracelet_length, bracelet_material, bracelet_style, bracelet_color)
+    VALUES (20, 'staal', 'schakels', 'zilver');
+INSERT INTO Watch (watch_bracelet_id, chassis_material, chassis_size, chassis_color_dial, chassis_color_pointers)
+    VALUES (2, 'staal', 38, 'blauw', 'zilver');
+INSERT INTO Product (product_name, product_brand, product_price,
+                     product_description, product_stock, product_sold, product_image_path, product_watch)
+    VALUES ('SNKD99K1', 'Seiko 5', 179.99,
+            'Stalen Seiko 5 met datum en dag van de week (Engels en Spaans). Waterdicht tot 50 meter.',
+            10, 20, 'seiko-5-staal.jpg', 2);
+
+-- Paul Hewitt
+INSERT INTO Bracelet (bracelet_length, bracelet_material, bracelet_style, bracelet_color)
+    VALUES (20, 'staal', 'mesh', 'zwart');
+INSERT INTO Watch (watch_bracelet_id, chassis_material, chassis_size, chassis_color_dial, chassis_color_pointers)
+    VALUES (3, 'staal', 40, 'zwart', 'zilver');
+INSERT INTO Product (product_name, product_brand, product_price,
+                     product_description, product_stock, product_sold, product_image_path, product_watch)
+    VALUES ('Sailor Black Sunray', 'Paul-Hewitt', 179.99,
+            'Zwart stalen dress-watch van Paul-Hewitt kast is het sailor model met een zwart stalen mesh band. ' ||
+            'Met gratis armband (zwart nylon touw met zwart stalen anker)', 100, 50, 'paulhewitt-sailor-zwart.jpg', 3);
+
+-- AP royal oak staal wit
+INSERT INTO Bracelet (bracelet_length, bracelet_material, bracelet_style, bracelet_color)
+    VALUES (30, 'staal', 'schakels', 'staal');
+INSERT INTO Watch (watch_bracelet_id, chassis_material, chassis_size, chassis_color_dial, chassis_color_pointers)
+    VALUES ('staal', 41, 'wit', 'zilver');
+INSERT INTO Product (product_name, product_brand, product_price,
+                     product_description, product_stock, product_sold, product_image_path, product_watch)
+    VALUES ('Royal Oak Ref 15400', 'Audemars Piquet', 24999.99,
+            'stalen ap royal-oak referentie 15400. Waterbestendigheid: 5 ATM', 1, 2, 'ap-royaloak15400-staal.jpg', 4);

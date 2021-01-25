@@ -52,7 +52,6 @@ public class Validators {
                 .builder()
                 .minimumLength(8)
                 .maximumLength(60)
-                .typeable()
                 .find("[a-z]+")
                 .find("[A-Z]+")
                 .find("[\\d]+")
@@ -78,14 +77,12 @@ public class Validators {
                 .builder()
                 .minimumLength(3)
                 .maximumLength(80)
-                .typeable()
                 .build());
 
         register("description", Validator
                 .builder()
                 .minimumLength(3)
-                .maximumLength(150)
-                .typeable()
+                .maximumLength(1000)
                 .build());
 
         register("zipcode", Validator
@@ -93,7 +90,6 @@ public class Validators {
                 .minimumLength(6)
                 .maximumLength(7)
                 .find("\\d{4}([A-Z]{2}| [A-Z]{2})")
-                .typeable()
                 .build()
         );
     }

@@ -27,6 +27,7 @@ import { ProductAmountListComponent } from './product-amount-list/product-amount
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatMenuModule} from '@angular/material/menu';
 import {IdFilterPipe} from './pipes/id-filter.pipe';
+import {ForceConfirmDialogComponent} from './dialogs/force-confirm-dialog.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {IdFilterPipe} from './pipes/id-filter.pipe';
     AddToCartDialogComponent,
     ConfirmWarnDialogComponent,
     WarningDialogComponent,
+    ForceConfirmDialogComponent,
     PriceFilterPipe,
     StringFilterPipe,
     StringListFilterPipe,

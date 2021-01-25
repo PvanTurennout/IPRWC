@@ -28,7 +28,7 @@
 
   <div class="visual-info">
     <div class="image">
-      <img *ngIf="product.imagePath; else noImageFound" [src]="getProductImagePath()" alt="No Image Found">
+      <img *ngIf="product.imagePath" [src]="getProductImagePath()" alt="No Image Found">
     </div>
     <p class="visual-text">Price: {{product.price | currency: 'EUR'}}</p>
     <p class="visual-text">Stock: {{product.stock}}</p>
@@ -47,7 +47,3 @@
   </div>
 
 </div>
-
-<ng-template #noImageFound>
-  <img src="assets/img/No-image-found.jpg" alt="No Image Found!" />
-</ng-template>

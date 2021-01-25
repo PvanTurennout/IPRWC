@@ -7,7 +7,7 @@
       <mat-form-field appearance="standard">
         <mat-label>Size</mat-label>
         <input type="number" min="1" formControlName="size" matInput required />
-        <span matSuffix>cm</span>
+        <span matSuffix>mm</span>
       </mat-form-field>
 
       <mat-form-field appearance="standard">
@@ -77,7 +77,8 @@
 
       <mat-form-field appearance="standard">
         <mat-label>Description</mat-label>
-        <textarea formControlName="description" matInput required ></textarea>
+        <textarea formControlName="description" maxlength="1000" #input matInput required ></textarea>
+        <mat-hint align="end">{{input.value?.length || 0}}/1000</mat-hint>
       </mat-form-field>
     </form>
 

@@ -125,11 +125,6 @@ public class Validator {
             return matches("^[\\d]+$");
         }
 
-        public ValidatorBuilder typeable() {
-            // List of characters: https://en.wikipedia.org/wiki/List_of_Unicode_characters
-            return matches("[\\u0020-\\u007e\\u00a1-\\u0148\\u014a-\\u017f]*");
-        }
-
         public Validator build() {
             Validator validator = new Validator();
             validator.setValidators(validators);
